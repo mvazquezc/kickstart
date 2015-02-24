@@ -1,4 +1,4 @@
-# version=RHEL7
+#version=RHEL7
 # System authorization information
 auth --enableshadow --passalgo=sha512
 
