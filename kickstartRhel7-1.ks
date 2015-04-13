@@ -43,7 +43,6 @@ logvol /var --fstype="xfs" --percent=5 --grow --name=lv_var --vgname=volgroup
 
 %pre
 #!/bin/bash
-act_mem=`grep MemTotal: /proc/meminfo | sed ‘s/^MemTotal: *//’|sed ‘s/ .*//’` / 1024
 memory=`grep MemTotal /proc/meminfo | awk '{print $2}'`
 ram=`expr $memory / 1024`
 echo "logvol swap --fstype=swap --size=$ram --name=lv_swap --vgname=volgroup" > /tmp/swappart
