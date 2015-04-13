@@ -25,17 +25,17 @@ timezone Europe/Madrid --isUtc --nontp
 zerombr
 clearpart --all --initlabel 
 # Disk partitioning information
-%include /tmp/partboot
 %include /tmp/partlvm
+%include /tmp/partboot
 volgroup volgroup --pesize=4096 pv.01
 %include /tmp/swappart
-logvol /tmp --fstype="xfs" --percent=5 --grow --name=lv_tmp --vgname=volgroup
-logvol /var/log/audit --fstype="xfs" --percent=2 --grow --name=lv_audit --vgname=volgroup
-logvol /home --fstype="xfs" --percent=5 --grow --name=lv_home --vgname=volgroup
-logvol /opt --fstype="xfs" --percent=15 --grow --name=lv_opt --vgname=volgroup
-logvol / --fstype="xfs" --percent=20 --grow --name=lv_root --vgname=volgroup
-logvol /var/log --fstype="xfs" --percent=15 --grow --name=lv_log --vgname=volgroup
-logvol /var --fstype="xfs" --percent=5 --grow --name=lv_var --vgname=volgroup
+logvol /tmp --fstype="xfs" --percent=5 --name=lv_tmp --vgname=volgroup
+logvol /var/log/audit --fstype="xfs" --percent=2 --name=lv_audit --vgname=volgroup
+logvol /home --fstype="xfs" --percent=5 --name=lv_home --vgname=volgroup
+logvol /opt --fstype="xfs" --percent=15 --name=lv_opt --vgname=volgroup
+logvol / --fstype="xfs" --percent=20 --name=lv_root --vgname=volgroup
+logvol /var/log --fstype="xfs" --percent=15 --name=lv_log --vgname=volgroup
+logvol /var --fstype="xfs" --percent=5 --name=lv_var --vgname=volgroup
 
 %packages
 @core
@@ -56,5 +56,5 @@ fi
 echo "ignoredisk --only-use=$disk" > /tmp/initdisk
 echo "bootloader --location=mbr --boot-drive=$disk" > /tmp/bootloader
 echo "part /boot --fstype=ext2 --ondisk=$disk --size=500" > /tmp/partboot
-echo "part pv.01 --size=1 --grow --ondisk=$disk" > /tmp/partlvm
+echo "part pv.01 --fstype=lvmpv --ondisk=$disk --size=1 --grow" > /tmp/partlvm
 %end
