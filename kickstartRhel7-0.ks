@@ -35,7 +35,7 @@ logvol /home --fstype="xfs" --size=1 --percent=5 --grow --name=lv_home --vgname=
 logvol /opt --fstype="xfs" --size=1 --percent=15 --grow --name=lv_opt --vgname=volgroup
 logvol / --fstype="xfs" --size=1 --percent=20 --grow --name=lv_root --vgname=volgroup
 logvol /var/log --fstype="xfs" --size=1 --percent=15 --grow --name=lv_log --vgname=volgroup
-logvol /var --fstype="xfs" --size=1 --percent=5 --grow --name=lv_var --vgname=volgroup
+logvol /var --fstype="xfs" --size=1 --percent=15 --grow --name=lv_var --vgname=volgroup
 
 %packages
 @core
@@ -45,6 +45,9 @@ logvol /var --fstype="xfs" --size=1 --percent=5 --grow --name=lv_var --vgname=vo
 #!/bin/bash
 memory=`grep MemTotal /proc/meminfo | awk '{print $2}'`
 ram=`expr $memory / 1024`
+if [ $ram -gt 4096 ];then
+ram=4096
+fi
 echo "logvol swap --fstype=swap --size=$ram --name=lv_swap --vgname=volgroup" > /tmp/swappart
 if [ -e /dev/sda ];then
 disk=sda
