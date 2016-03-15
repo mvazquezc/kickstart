@@ -29,16 +29,17 @@ clearpart --all --initlabel
 %include /tmp/partboot
 volgroup volgroup --pesize=4096 pv.01
 %include /tmp/swappart
-logvol /tmp --fstype="xfs" --percent=5 --name=lv_tmp --vgname=volgroup
-logvol /var/log/audit --fstype="xfs" --percent=2 --name=lv_audit --vgname=volgroup
-logvol /home --fstype="xfs" --percent=5 --name=lv_home --vgname=volgroup
-logvol /opt --fstype="xfs" --percent=15 --name=lv_opt --vgname=volgroup
+logvol /tmp --fstype="xfs" --percent=5 --maxsize=20480 --name=lv_tmp --vgname=volgroup
+logvol /var/log/audit --fstype="xfs" --percent=2 --maxsize=15360 --name=lv_audit --vgname=volgroup
+logvol /home --fstype="xfs" --percent=5 --maxsize=51200 --name=lv_home --vgname=volgroup
+logvol /opt --fstype="xfs" --percent=15 --maxsize=51200 --name=lv_opt --vgname=volgroup
 logvol / --fstype="xfs" --percent=20 --name=lv_root --vgname=volgroup
-logvol /var/log --fstype="xfs" --percent=15 --name=lv_log --vgname=volgroup
-logvol /var --fstype="xfs" --percent=15 --name=lv_var --vgname=volgroup
+logvol /var/log --fstype="xfs" --percent=15 --maxsize=30720 --name=lv_log --vgname=volgroup
+logvol /var --fstype="xfs" --percent=15 --maxsize=51200 --name=lv_var --vgname=volgroup
 
 %packages
 @core
+libselinux-python
 %end
 
 %pre
